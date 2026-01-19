@@ -1,1 +1,204 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You 💖</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<style>
+* { box-sizing: border-box; font-family: 'Quicksand', sans-serif; }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: linear-gradient(135deg,#ffd1dc,#e0c3fc,#c2e9fb);
+  animation: bg 10s infinite alternate;
+}
+
+@keyframes bg {
+  0% { background-position: left; }
+  100% { background-position: right; }
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  font-size: 20px;
+  animation: float 6s infinite ease-in;
+  opacity: 0.7;
+}
+
+@keyframes float {
+  0% { transform: translateY(100vh); }
+  100% { transform: translateY(-10vh); }
+}
+
+/* QR Section */
+#qr-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#qr {
+  padding: 20px;
+  background: white;
+  border-radius: 25px;
+  box-shadow: 0 0 30px rgba(255,182,193,0.8);
+  animation: pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+#qr-text {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #ff4f8b;
+}
+
+/* Pages */
+.page {
+  display: none;
+  min-height: 100vh;
+  padding: 30px;
+  text-align: center;
+  animation: fade 1.2s;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Button */
+button {
+  margin-top: 30px;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 20px pink;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  50% { transform: translateY(-5px); }
+}
+
+/* Kittens */
+.kitten {
+  font-size: 80px;
+  animation: wiggle 2s infinite;
+}
+
+@keyframes wiggle {
+  50% { transform: rotate(5deg); }
+}
+
+audio { display: none; }
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/03/07/audio_1c9bb1dfb7.mp3">
+</audio>
+
+<!-- Floating Hearts -->
+<script>
+for(let i=0;i<25;i++){
+  let h=document.createElement('div');
+  h.className='heart';
+  h.innerHTML='💕';
+  h.style.left=Math.random()*100+'vw';
+  h.style.animationDuration=(4+Math.random()*4)+'s';
+  document.body.appendChild(h);
+}
+</script>
+
+<!-- QR PAGE -->
+<div id="qr-section">
+  <div id="qr"></div>
+  <div id="qr-text">Scan me, cutie 💗✨</div>
+</div>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page">
+  <h2 id="typing"></h2>
+  <button onclick="goPage2()">Click this, cutie 🐾💗</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <div class="kitten">🐱🐱🐱</div>
+  <h2>This is you 🥺💖</h2>
+  <p>Cute. Soft. Precious.</p>
+  <p>Just like these kittens, you make everything happier.</p>
+  <p>Too cute to handle 😭🐾</p>
+</div>
+
+<script>
+/* QR CODE – CHANGE URL AFTER UPLOADING */
+new QRCode(document.getElementById("qr"), {
+  text: window.location.href,
+  width: 220,
+  height: 220,
+  colorDark: "#ff7eb3",
+  colorLight: "#fff",
+  correctLevel: QRCode.CorrectLevel.H
+});
+
+/* Typing Text */
+let text=[
+"Hi beautiful 💖 How was your day?",
+"I hope today was gentle with you and made you smile.",
+"You are beautiful in every way — your smile, your heart, your soul.",
+"You make ordinary moments feel special.",
+"Ang ganda mo 💕",
+"Napaka-special mo.",
+"Ikaw ang dahilan kung bakit mas gumaganda ang mundo.",
+"From the Philippines comes someone warm, kind, and absolutely unforgettable 🌸🇵🇭"
+];
+
+let i=0,j=0;
+let typing=document.getElementById("typing");
+
+function type(){
+ if(j<text[i].length){
+  typing.innerHTML+=text[i][j++];
+  setTimeout(type,50);
+ } else {
+  setTimeout(()=>{typing.innerHTML+="<br><br>";j=0;i++;if(i<text.length)type();},800);
+ }
+}
+
+setTimeout(()=>{
+ document.getElementById("qr-section").style.display="none";
+ document.getElementById("page1").style.display="block";
+ type();
+},4000);
+
+function goPage2(){
+ document.getElementById("page1").style.display="none";
+ document.getElementById("page2").style.display="block";
+}
+</script>
+
+</body>
+</html>
